@@ -63,1023 +63,440 @@
 </html>
 -->
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Time Manager</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Effective Time Manager</title>
     <style>
         :root {
-            --primary: #4285f4;
-            --primary-dark: #3367d6;
-            --success: #34a853;
-            --warning: #fbbc05;
-            --danger: #ea4335;
-            --light: #f8f9fa;
-            --dark: #202124;
-            --gray: #dadce0;
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --success-color: #4cc9f0;
+            --warning-color: #f72585;
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+            --light-text: #f8f9fa;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-        
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f7fa;
-            color: var(--dark);
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            color: var(--dark-text);
             line-height: 1.6;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        
-        /* Dark Mode Styles */
-        body.dark-mode {
-            background-color: var(--dark);
-            color: var(--light);
         }
 
-        body.dark-mode .card {
-            background-color: var(--dark);
-            border-color: var(--gray);
-        }
-
-        body.dark-mode .card-header {
-            border-color: var(--gray);
-        }
-
-        body.dark-mode .form-control {
-            background-color: var(--dark);
-            border-color: var(--gray);
-            color: var(--light);
-        }
-
-        body.dark-mode .input-group-text {
-            background-color: var(--dark);
-            border-color: var(--gray);
-            color: var(--light);
-        }
-
-        body.dark-mode .btn-primary {
-            background-color: var(--primary);
-            border-color: var(--primary);
-        }
-
-        body.dark-mode .btn-primary:hover {
-            background-color: var(--primary-dark);
-            border-color: var(--primary-dark);
-        }
-
-        body.dark-mode .activity-item {
-            background-color: var(--dark);
-            border-color: var(--gray);
-        }
-
-        body.dark-mode .result-container {
-            background-color: var(--dark);
-        }
-
-        body.dark-mode .result-card {
-            background-color: var(--dark);
-            border-color: var(--gray);
-        }
-
-        body.dark-mode .chart-container {
-            background-color: var(--dark);
-        }
-
-        body.dark-mode .chart-legend {
-            color: var(--light);
-        }
-
-        body.dark-mode .recommendation-item {
-            background-color: var(--dark);
-            border-color: var(--gray);
-        }
-
-        body.dark-mode .tip-container {
-            background-color: var(--dark);
-            border-color: var(--gray);
-        }
-
-        body.dark-mode .tip-icon {
-            color: var(--primary);
-        }
-
-        body.dark-mode .footer {
-            color: var(--light);
-        }
-        
         .container {
-            max-width: 1000px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        .header h1 {
-            font-size: 36px;
-            margin-bottom: 8px;
-            color: var(--primary);
-        }
-        
-        .header p {
-            color: #666;
-            font-size: 18px;
-        }
-        
-        .card {
-            background-color: #fff;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: white;
             padding: 30px;
+            box-shadow: var(--box-shadow);
+            border-radius: var(--border-radius);
+        }
+
+        header {
+            text-align: center;
             margin-bottom: 30px;
         }
-        
-        .card-header {
-            border-bottom: 1px solid var(--gray);
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .card-header h2 {
-            font-size: 24px;
-            color: var(--primary);
-        }
-        
-        .card-icon {
-            font-size: 24px;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--primary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-weight: 600;
         }
 
-        @media (max-width: 768px) {
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
+        .tagline {
+            color: #666;
+            font-size: 1.1rem;
         }
-        
-        .form-group {
+
+        .tab-container {
+            display: flex;
+            border-bottom: 1px solid #ddd;
             margin-bottom: 20px;
         }
-        
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #555;
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid var(--gray);
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border 0.3s;
-        }
-        
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.2);
-        }
-        
-        .input-group {
-            display: flex;
-        }
-        
-        .input-group .form-control {
-            border-right: none;
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-        }
-        
-        .input-group-append {
-            display: flex;
-        }
-        
-        .input-group-text {
-            display: flex;
-            align-items: center;
-            padding: 0 16px;
-            background-color: #f1f3f4;
-            border: 1px solid var(--gray);
-            border-left: none;
-            border-top-right-radius: 8px;
-            border-bottom-right-radius: 8px;
-            color: #555;
-        }
-        
-        .btn {
-            display: inline-block;
-            font-weight: 500;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: middle;
-            user-select: none;
-            border: 1px solid transparent;
-            padding: 12px 24px;
-            font-size: 16px;
-            line-height: 1.5;
-            border-radius: 8px;
-            transition: all 0.2s ease-in-out;
+
+        .tab {
+            padding: 10px 20px;
             cursor: pointer;
-        }
-        
-        .btn-primary {
-            color: #fff;
-            background-color: var(--primary);
-            border-color: var(--primary);
-        }
-        
-        .btn-primary:hover {
-            background-color: var(--primary-dark);
-            border-color: var(--primary-dark);
-        }
-        
-        .btn-block {
-            display: block;
-            width: 100%;
-        }
-        
-        .activity-list {
-            list-style: none;
-            margin-top: 20px;
-        }
-        
-        .activity-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-            padding: 8px 16px;
-            background-color: #f1f3f4;
-            border-radius: 8px;
-        }
-        
-        .activity-icon {
-            margin-right: 16px;
-            color: var(--primary);
-        }
-        
-        .activity-name {
-            flex-grow: 1;
-        }
-        
-        .activity-hours {
+            background-color: #f1f1f1;
+            border: none;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            margin-right: 5px;
             font-weight: 500;
-            color: var(--dark);
+            transition: all 0.3s ease;
         }
-        
-        .result-container {
+
+        .tab.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .form-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .one-column {
+            grid-column: span 2;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: var(--border-radius);
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 500;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 25px;
+            background-color: var(--light-bg);
+            border-radius: var(--border-radius);
             display: none;
             animation: fadeIn 0.5s;
         }
-        
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        
-        .result-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-bottom: 30px;
-        }
 
-        @media (max-width: 768px) {
-            .result-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .result-card {
-            background-color: white;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        .result-header {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
             text-align: center;
         }
-        
-        .result-value {
-            font-size: 36px;
-            font-weight: 600;
-            margin: 10px 0;
-            color: var(--primary);
-        }
-        
-        .result-label {
-            color: #666;
-            font-size: 16px;
-        }
-        
-        .progress-container {
-            height: 8px;
-            background-color: #e0e0e0;
-            border-radius: 4px;
-            margin: 15px 0;
-            overflow: hidden;
-        }
-        
-        .progress-bar {
-            height: 100%;
-            background-color: var(--primary);
-            width: 0;
-            transition: width 1s;
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
         }
 
-        .chart-container {
+        .stat-card {
+            background-color: white;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .stat-title {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .stat-unit {
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .alert {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+        }
+
+        .alert-warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border-left: 4px solid #ffc107;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+
+        .progress-container {
+            margin: 20px 0;
+            background-color: #e9ecef;
+            border-radius: 10px;
+            height: 25px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 500;
+            transition: width 0.5s ease-in-out;
+        }
+
+        .recommendations {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .recommendations h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .recommendations ul {
+            padding-left: 20px;
+        }
+
+        .recommendations li {
+            margin-bottom: 8px;
+        }
+
+        .additional-metrics {
+            margin-top: 20px;
+        }
+
+        .pie-chart-container {
             display: flex;
             justify-content: center;
-            margin: 20px 0;
-            height: 300px;
+            margin: 25px 0;
         }
 
         .chart-legend {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 16px;
-            margin-top: 20px;
+            gap: 10px;
+            margin-top: 15px;
         }
 
         .legend-item {
             display: flex;
             align-items: center;
-            margin-right: 16px;
+            margin-right: 15px;
         }
 
         .legend-color {
             width: 16px;
             height: 16px;
-            border-radius: 4px;
-            margin-right: 8px;
-        }
-
-        .recommendations {
-            margin-top: 30px;
-        }
-
-        .recommendation-item {
-            margin-bottom: 12px;
-            padding: 16px;
-            background-color: #f1f3f4;
-            border-radius: 8px;
-            border-left: 4px solid var(--primary);
-        }
-
-        .tip-container {
-            margin-top: 30px;
-            background-color: rgba(66, 133, 244, 0.1);
-            border-radius: 12px;
-            padding: 20px;
-        }
-
-        .tip-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .tip-icon {
-            margin-right: 12px;
-            color: var(--primary);
-            font-size: 24px;
-        }
-
-        .tip-list {
-            list-style: none;
-        }
-
-        .tip-item {
-            margin-bottom: 8px;
-            display: flex;
-            align-items: flex-start;
-        }
-
-        .tip-item i {
-            color: var(--success);
-            margin-right: 8px;
-            margin-top: 4px;
-        }
-
-        .category-badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 16px;
-            font-size: 12px;
-            font-weight: 600;
-            color: white;
-            margin-left: 8px;
-        }
-
-        .badge-work {
-            background-color: var(--primary);
-        }
-
-        .badge-rest {
-            background-color: var(--success);
-        }
-
-        .badge-personal {
-            background-color: var(--warning);
-        }
-
-        .custom-activity-list {
-            margin-top: 16px;
-        }
-
-        .custom-activity {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px;
-            background-color: #f1f3f4;
-            border-radius: 8px;
-            margin-bottom: 8px;
-        }
-
-        .custom-activity-inputs {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .add-activity-btn {
-            background-color: var(--primary);
-            color: white;
-            border: none;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            font-size: 24px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.2s;
+            margin-right: 6px;
         }
 
-        .add-activity-btn:hover {
-            background-color: var(--primary-dark);
-        }
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 20px;
+            }
 
-        .remove-activity-btn {
-            background-color: var(--danger);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            font-size: 16px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+            .form-content {
+                grid-template-columns: 1fr;
+            }
 
-        .time-goal-section {
-            margin-top: 30px;
-        }
+            .one-column {
+                grid-column: span 1;
+            }
 
-        .time-goal-header {
-            margin-bottom: 20px;
-        }
-
-        .tab-container {
-            margin-bottom: 30px;
-        }
-
-        .tabs {
-            display: flex;
-            border-bottom: 1px solid var(--gray);
-        }
-
-        .tab {
-            padding: 12px 24px;
-            cursor: pointer;
-            border-bottom: 3px solid transparent;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-
-        .tab.active {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
-        }
-
-        .tab-content {
-            padding-top: 24px;
-        }
-
-        .tab-pane {
-            display: none;
-        }
-
-        .tab-pane.active {
-            display: block;
-        }
-
-        /* Switch Toggle */
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
-        }
-
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .toggle-slider {
-            background-color: var(--primary);
-        }
-
-        input:checked + .toggle-slider:before {
-            transform: translateX(26px);
-        }
-
-        .settings-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .settings-label {
-            font-weight: 500;
-        }
-
-        /* Export/Share */
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            border: 1px solid var(--primary);
-            color: var(--primary);
-        }
-
-        .btn-outline:hover {
-            background-color: rgba(66, 133, 244, 0.1);
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            margin-top: 50px;
-            color: #888;
-            font-size: 14px;
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1><i class="fas fa-clock"></i> Smart Time Manager</h1>
-            <p>Plan, visualize, and optimize your time for maximum productivity</p>
-        </div>
+        <header>
+            <h1>Effective Time Manager</h1>
+            <p class="tagline">Discover your true available time and plan better</p>
+        </header>
 
-        <div class="tab-container">
-            <div class="tabs">
-                <div class="tab active" data-tab="planner">Time Planner</div>
-                <div class="tab" data-tab="analysis">Analysis</div>
-                <div class="tab" data-tab="settings">Settings</div>
-            </div>
-            
-            <div class="tab-content">
-                <!-- Time Planner Tab -->
-                <div class="tab-pane active" id="planner">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Daily Activities</h2>
-                            <div class="card-icon"><i class="fas fa-tasks"></i></div>
-                        </div>
-                        
-                        <form id="timeForm">
-                            <div class="form-grid">
-                                <div class="form-group">
-                                    <label class="form-label" for="role">Your Role:</label>
-                                    <select class="form-control" id="role" required>
-                                        <option value="">Select your role</option>
-                                        <option value="student">Student</option>
-                                        <option value="employee">Employee</option>
-                                        <option value="entrepreneur">Entrepreneur</option>
-                                        <option value="freelancer">Freelancer</option>
-                                        <option value="homemaker">Homemaker</option>
-                                        <option value="retiree">Retiree</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label class="form-label" for="workingDays">Working Days per Week:</label>
-                                    <input class="form-control" type="number" id="workingDays" min="1" max="7" value="5" required>
-                                </div>
-                            </div>
-                            
-                            <h3 style="margin-top: 20px; margin-bottom: 16px; color: #555;">Essential Activities</h3>
-                            
-                            <div class="activity-list">
-                                <div class="activity-item">
-                                    <div class="activity-icon"><i class="fas fa-bed"></i></div>
-                                    <div class="activity-name">Sleep</div>
-                                    <div class="input-group" style="width: 150px;">
-                                        <input class="form-control" type="number" id="sleepHours" min="0" max="24" step="0.5" value="8" required>
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">hrs/day</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="activity-item">
-                                    <div class="activity-icon"><i class="fas fa-utensils"></i></div>
-                                    <div class="activity-name">Eating & Meal Prep</div>
-                                    <div class="input-group" style="width: 150px;">
-                                        <input class="form-control" type="number" id="eatingHours" min="0" max="24" step="0.5" value="2" required>
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">hrs/day</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="activity-item">
-                                    <div class="activity-icon"><i class="fas fa-car"></i></div>
-                                    <div class="activity-name">Travel & Commute</div>
-                                    <div class="input-group" style="width: 150px;">
-                                        <input class="form-control" type="number" id="travelHours" min="0" max="24" step="0.5" value="1" required>
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">hrs/day</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="activity-item">
-                                    <div class="activity-icon"><i class="fas fa-gamepad"></i></div>
-                                    <div class="activity-name">Leisure & Recreation</div>
-                                    <div class="input-group" style="width: 150px;">
-                                        <input class="form-control" type="number" id="leisureHours" min="0" max="24" step="0.5" value="2" required>
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">hrs/day</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="activity-item">
-                                    <div class="activity-icon"><i class="fas fa-shower"></i></div>
-                                    <div class="activity-name">Personal Care</div>
-                                    <div class="input-group" style="width: 150px;">
-                                        <input class="form-control" type="number" id="personalCareHours" min="0" max="24" step="0.5" value="1" required>
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">hrs/day</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div style="margin-top: 24px; margin-bottom: 16px;">
-                                <h3 style="margin-bottom: 16px; color: #555; display: inline-block;">Custom Activities</h3>
-                                <button type="button" class="add-activity-btn" id="addActivityBtn">+</button>
-                            </div>
-                            
-                            <div id="customActivitiesList" class="custom-activity-list">
-                                <!-- Custom activities will be added here -->
-                            </div>
-                            
-                            <h3 style="margin-top: 30px; margin-bottom: 16px; color: #555;">Time Goal</h3>
-                            
-                            <div class="form-grid">
-                                <div class="form-group">
-                                    <label class="form-label" for="goalSpan">Duration:</label>
-                                    <div class="input-group">
-                                        <input class="form-control" type="number" id="goalSpan" min="1" value="4" required>
-                                        <div class="input-group-append">
-                                            <select class="form-control" id="timeUnit" required style="border-radius: 0 8px 8px 0; border-left: none;">
-                                                <option value="days">Days</option>
-                                                <option value="weeks" selected>Weeks</option>
-                                                <option value="months">Months</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label class="form-label" for="projectName">Project Name (Optional):</label>
-                                    <input class="form-control" type="text" id="projectName" placeholder="E.g., Learn Python, Complete Home Renovation">
-                                </div>
-                            </div>
-                            
-                            <button type="submit" class="btn btn-primary btn-block">Calculate Available Time</button>
-                        </form>
-                    </div>
-                    
-                    <div id="resultSection" class="result-container">
-                        <div class="card">
-                            <div class="card-header">
-                                <h2>Time Analysis Results</h2>
-                                <div class="card-icon"><i class="fas fa-chart-pie"></i></div>
-                            </div>
-                            
-                            <div id="projectHeader" style="text-align: center; margin-bottom: 30px;">
-                                <h3>Project: <span id="projectNameDisplay">Unnamed Project</span></h3>
-                                <p style="color: #666;"><span id="roleDisplay">Role</span> • <span id="durationDisplay">Duration</span></p>
-                            </div>
-                            
-                            <div class="result-grid">
-                                <div class="result-card">
-                                    <div class="result-label">Total Hours in Period</div>
-                                    <div class="result-value" id="totalHours">0</div>
-                                    <div>hours</div>
-                                </div>
-                                
-                                <div class="result-card">
-                                    <div class="result-label">Available Working Hours</div>
-                                    <div class="result-value" id="workingHours">0</div>
-                                    <div>hours</div>
-                                </div>
-                                
-                                <div class="result-card">
-                                    <div class="result-label">Average Available Per Day</div>
-                                    <div class="result-value" id="dailyAverage">0</div>
-                                    <div>hours/day</div>
-                                </div>
-                            </div>
-                            
-                            <div class="chart-container" id="timeChart"></div>
-                            
-                            <div class="chart-legend" id="chartLegend">
-                                <!-- Legend items will be added here -->
-                            </div>
-                            
-                            <div class="recommendations">
-                                <h3 style="margin-bottom: 16px;">Time Management Recommendations</h3>
-                                <div id="recommendationsList">
-                                    <!-- Recommendations will be added here -->
-                                </div>
-                            </div>
-                            
-                            <div class="tip-container">
-                                <div class="tip-header">
-                                    <div class="tip-icon"><i class="fas fa-lightbulb"></i></div>
-                                    <h3>Time Management Tips</h3>
-                                </div>
-                                <ul class="tip-list">
-                                    <li class="tip-item">
-                                        <i class="fas fa-check-circle"></i>
-                                        <span>Use the Pomodoro Technique: Work for 25 minutes, then take a 5-minute break.</span>
-                                    </li>
-                                    <li class="tip-item">
-                                        <i class="fas fa-check-circle"></i>
-                                        <span>Plan your most challenging tasks during your peak energy hours.</span>
-                                    </li>
-                                    <li class="tip-item">
-                                        <i class="fas fa-check-circle"></i>
-                                        <span>Set SMART goals: Specific, Measurable, Achievable, Relevant, and Time-bound.</span>
-                                    </li>
-                                    <li class="tip-item">
-                                        <i class="fas fa-check-circle"></i>
-                                        <span>Use the 2-minute rule: If a task takes less than 2 minutes, do it immediately.</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            
-                            <div class="action-buttons">
-                                <button class="btn btn-outline" id="downloadReportBtn">
-                                    <i class="fas fa-download"></i> Download Report
-                                </button>
-                                <button class="btn btn-outline" id="shareResultsBtn">
-                                    <i class="fas fa-share-alt"></i> Share Results
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+        <form id="timeForm">
+            <div class="form-content">
+                <div class="form-group">
+                    <label for="role">Your Role:</label>
+                    <select id="role" required>
+                        <option value="">Select your role</option>
+                        <option value="student">Student</option>
+                        <option value="employee">Employee</option>
+                        <option value="freelancer">Freelancer</option>
+                        <option value="parent">Parent</option>
+                        <option value="other">Other</option>
+                    </select>
                 </div>
-                
-                <!-- Analysis Tab -->
-                <div class="tab-pane" id="analysis">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Time Analysis Dashboard</h2>
-                            <div class="card-icon"><i class="fas fa-chart-line"></i></div>
-                        </div>
-                        <p style="text-align: center; margin: 40px 0; color: #666;">
-                            Calculate your time first to see detailed analysis here.
-                        </p>
-                    </div>
+
+                <div class="form-group">
+                    <label for="workStudyHours">Work/Study Hours per Day:</label>
+                    <input type="number" id="workStudyHours" min="0" max="24" step="0.5" required>
                 </div>
-                
-                <!-- Settings Tab -->
-                <div class="tab-pane" id="settings">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Settings</h2>
-                            <div class="card-icon"><i class="fas fa-cog"></i></div>
-                        </div>
-                        
-                        <h3 style="margin-top: 20px; margin-bottom: 16px; color: #555;">Display Options</h3>
-                        
-                        <div class="settings-row">
-                            <span class="settings-label">Dark Mode</span>
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="darkModeToggle">
-                                <span class="toggle-slider"></span>
-                            </label>
-                        </div>
-                        
-                        <div class="settings-row">
-                            <span class="settings-label">Show Detailed Recommendations</span>
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="detailedRecsToggle" checked>
-                                <span class="toggle-slider"></span>
-                            </label>
-                        </div>
-                        
-                        <div class="settings-row">
-                            <span class="settings-label">Include Weekends in Calculations</span>
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="includeWeekendsToggle">
-                                <span class="toggle-slider"></span>
-                            </label>
-                        </div>
-                        
-                        <h3 style="margin-top: 30px; margin-bottom: 16px; color: #555;">Data Management</h3>
-                        
-                        <div class="form-group">
-                            <button class="btn btn-outline btn-block" id="savePresetBtn">
-                                <i class="fas fa-save"></i> Save Current Settings as Preset
-                            </button>
-                        </div>
-                        
-                        <div class="form-group">
-                            <button class="btn btn-outline btn-block" id="clearDataBtn">
-                                <i class="fas fa-trash"></i> Clear Saved Data
-                            </button>
-                        </div>
-                    </div>
+
+                <div class="form-group">
+                    <label for="sleepHours">Sleep Hours per Day:</label>
+                    <input type="number" id="sleepHours" min="0" max="24" step="0.5" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="eatingHours">Eating Hours per Day:</label>
+                    <input type="number" id="eatingHours" min="0" max="24" step="0.5" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="travelHours">Travel Hours per Day:</label>
+                    <input type="number" id="travelHours" min="0" max="24" step="0.5" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="leisureHours">Leisure Hours per Day:</label>
+                    <input type="number" id="leisureHours" min="0" max="24" step="0.5" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="familyHours">Family Time per Day:</label>
+                    <input type="number" id="familyHours" min="0" max="24" step="0.5" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="selfCareHours">Self-Care Hours per Day:</label>
+                    <input type="number" id="selfCareHours" min="0" max="24" step="0.5" required>
+                </div>
+
+                <div class="form-group one-column">
+                    <label for="goalName">Goal Name/Description:</label>
+                    <input type="text" id="goalName" placeholder="E.g., Complete project, Learn a skill, etc.">
+                </div>
+
+                <div class="form-group">
+                    <label for="goalSpan">Goal Duration:</label>
+                    <input type="number" id="goalSpan" min="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="timeUnit">Duration Unit:</label>
+                    <select id="timeUnit" required>
+                        <option value="days">Days</option>
+                        <option value="weeks">Weeks</option>
+                        <option value="months">Months</option>
+                    </select>
                 </div>
             </div>
-        </div>
-        
-        <div class="footer">
-            <p>Smart Time Manager &copy; 2025 | Designed for maximum productivity</p>
+
+            <button type="submit">Calculate Available Time</button>
+        </form>
+
+        <div id="result" class="result">
+            <!-- Results will be displayed here -->
         </div>
     </div>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Tab functionality
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const tabId = tab.getAttribute('data-tab');
-                    
-                    // Remove active class from all tabs and tab panes
-                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-                    
-                    // Add active class to current tab and tab pane
-                    tab.classList.add('active');
-                    document.getElementById(tabId).classList.add('active');
-                });
-            });
-            
-            // Custom activity functionality
-            let activityCounter = 0;
-            const addActivityBtn = document.getElementById('addActivityBtn');
-            const customActivitiesList = document.getElementById('customActivitiesList');
-            
-            addActivityBtn.addEventListener('click', () => {
-                activityCounter++;
-                const newActivity = document.createElement('div');
-                newActivity.className = 'custom-activity';
-                newActivity.innerHTML = `
-                    <div class="custom-activity-inputs">
-                        <input class="form-control" type="text" placeholder="Activity name" style="width: 200px;" 
-                            id="customActivityName${activityCounter}" required>
-                        <div class="input-group" style="width: 150px;">
-                            <input class="form-control" type="number" min="0" max="24" step="0.5" value="1" 
-                                id="customActivityHours${activityCounter}" required>
-                            <div class="input-group-append">
-                                <span class="input-group-text">hrs/day</span>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="button" class="remove-activity-btn">
-                        <i class="fas fa-times"></i>
-                    </button>
-                `;
-                
-                customActivitiesList.appendChild(newActivity);
-                
-                // Add event listener to remove button
-                newActivity.querySelector('.remove-activity-btn').addEventListener('click', function() {
-                    customActivitiesList.removeChild(newActivity);
-                });
-            });
-            
-            // Form submission and calculation
             const timeForm = document.getElementById('timeForm');
-            const resultSection = document.getElementById('resultSection');
-            
+            const resultDiv = document.getElementById('result');
+
             timeForm.addEventListener('submit', function(event) {
                 event.preventDefault();
-                
-                // Get basic form values
+
+                // Get form values
                 const role = document.getElementById('role').value;
-                const workingDaysPerWeek = parseFloat(document.getElementById('workingDays').value);
-                const sleepHours = parseFloat(document.getElementById('sleepHours').value);
-                const eatingHours = parseFloat(document.getElementById('eatingHours').value);
-                const travelHours = parseFloat(document.getElementById('travelHours').value);
-                const leisureHours = parseFloat(document.getElementById('leisureHours').value);
-                const personalCareHours = parseFloat(document.getElementById('personalCareHours').value);
-                const goalSpan = parseInt(document.getElementById('goalSpan').value);
+                const goalName = document.getElementById('goalName').value || "Your Goal";
+                const workStudyHours = parseFloat(document.getElementById('workStudyHours').value) || 0;
+                const sleepHours = parseFloat(document.getElementById('sleepHours').value) || 0;
+                const eatingHours = parseFloat(document.getElementById('eatingHours').value) || 0;
+                const travelHours = parseFloat(document.getElementById('travelHours').value) || 0;
+                const leisureHours = parseFloat(document.getElementById('leisureHours').value) || 0;
+                const familyHours = parseFloat(document.getElementById('familyHours').value) || 0;
+                const selfCareHours = parseFloat(document.getElementById('selfCareHours').value) || 0;
+                const goalSpan = parseInt(document.getElementById('goalSpan').value) || 0;
                 const timeUnit = document.getElementById('timeUnit').value;
-                const projectName = document.getElementById('projectName').value || "Unnamed Project";
-                
-                // Get custom activities
-                const customActivities = [];
-                document.querySelectorAll('.custom-activity').forEach((activity, index) => {
-                    const nameInput = activity.querySelector(`input[id^="customActivityName"]`);
-                    const hoursInput = activity.querySelector(`input[id^="customActivityHours"]`);
-                    
-                    if (nameInput && hoursInput) {
-                        customActivities.push({
-                            name: nameInput.value || `Activity ${index + 1}`,
-                            hours: parseFloat(hoursInput.value) || 0
-                        });
-                    }
-                });
-                
-                // Calculate total non-working hours per day
-                let baseDailyActivitiesHours = sleepHours + eatingHours + travelHours + leisureHours + personalCareHours;
-                
-                // Add custom activities hours
-                let customActivitiesHours = 0;
-                customActivities.forEach(activity => {
-                    customActivitiesHours += activity.hours;
-                });
-                
-                const nonWorkingHoursPerDay = baseDailyActivitiesHours + customActivitiesHours;
-                
-                // Calculate available working hours per day
-                const workingHoursPerDay = Math.max(0, 24 - nonWorkingHoursPerDay);
-                
+
+                // Calculate total allocated hours per day
+                const totalAllocatedHours = workStudyHours + sleepHours + eatingHours + 
+                                          travelHours + leisureHours + familyHours + selfCareHours;
+
+                // Check if total hours exceed 24
+                if (totalAllocatedHours > 24) {
+                    resultDiv.style.display = "block";
+                    resultDiv.innerHTML = `
+                        <div class="alert alert-warning">
+                            <strong>Warning:</strong> Your total allocated hours (${totalAllocatedHours.toFixed(1)}) exceed 24 hours in a day. 
+                            Please adjust your time allocations.
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Calculate remaining hours per day for goal
+                const remainingHoursPerDay = 24 - totalAllocatedHours;
+
                 // Convert goal span to days
                 let totalDays;
                 if (timeUnit === 'days') {
@@ -1089,378 +506,189 @@
                 } else if (timeUnit === 'months') {
                     totalDays = goalSpan * 30; // Approximating a month as 30 days
                 }
-                
-                // Calculate total hours in the period
-                const totalHours = 24 * totalDays;
-                
-                // Calculate working days (excluding weekends if applicable)
+
+                // Calculate total available working hours and adjust for weekends if applicable
                 let workingDays = totalDays;
-                const includeWeekends = document.getElementById('includeWeekendsToggle').checked;
-                
-                if (!includeWeekends) {
-                    if (role === 'employee' || role === 'student') {
-                        // Calculate weekdays only
-                        const weeks = totalDays / 7;
-                        workingDays = Math.ceil(weeks * workingDaysPerWeek);
-                    }
+                if (role === 'employee') {
+                    // Assuming employees have weekends off
+                    const weeks = totalDays / 7;
+                    const weekendDays = Math.floor(weeks) * 2;
+                    workingDays = totalDays - weekendDays;
                 }
-                
-                // Calculate total available working hours
-                const totalWorkingHours = workingHoursPerDay * workingDays;
-                
-                // Calculate daily average
-                const dailyAverage = totalWorkingHours / totalDays;
-                
-                // Update display
-                document.getElementById('totalHours').textContent = totalHours.toFixed(0);
-                document.getElementById('workingHours').textContent = totalWorkingHours.toFixed(1);
-                document.getElementById('dailyAverage').textContent = dailyAverage.toFixed(1);
-                document.getElementById('projectNameDisplay').textContent = projectName;
-                document.getElementById('roleDisplay').textContent = role.charAt(0).toUpperCase() + role.slice(1);
-                document.getElementById('durationDisplay').textContent = `${goalSpan} ${timeUnit}`;
-                
-                // Show results section
-                resultSection.style.display = 'block';
-                
-                // Scroll to results
-                resultSection.scrollIntoView({ behavior: 'smooth' });
-                
-                // Create chart data
-                const activities = [
-                    { name: 'Sleep', hours: sleepHours * totalDays, color: '#4285f4' },
-                    { name: 'Eating', hours: eatingHours * totalDays, color: '#fbbc05' },
-                    { name: 'Travel', hours: travelHours * totalDays, color: '#ea4335' },
-                    { name: 'Leisure', hours: leisureHours * totalDays, color: '#34a853' },
-                    { name: 'Personal Care', hours: personalCareHours * totalDays, color: '#9e9e9e' },
-                    { name: 'Available Time', hours: totalWorkingHours, color: '#673ab7' }
+
+                // Calculate effective hours and days
+                const totalAvailableHours = remainingHoursPerDay * workingDays;
+                const effectiveDays = totalAvailableHours / 24;
+                const daysLost = totalDays - effectiveDays;
+                const percentTimeAvailable = (effectiveDays / totalDays) * 100;
+
+                // Prepare pie chart data
+                const timeCategories = [
+                    { name: "Sleep", hours: sleepHours, color: "#4361ee" },
+                    { name: "Eating", hours: eatingHours, color: "#3a0ca3" },
+                    { name: "Travel", hours: travelHours, color: "#7209b7" },
+                    { name: "Work/Study", hours: workStudyHours, color: "#f72585" },
+                    { name: "Leisure", hours: leisureHours, color: "#4cc9f0" },
+                    { name: "Family", hours: familyHours, color: "#56cfe1" },
+                    { name: "Self-Care", hours: selfCareHours, color: "#64dfdf" },
+                    { name: "Available for Goal", hours: remainingHoursPerDay, color: "#72efdd" }
                 ];
+
+                // Filter out categories with 0 hours
+                const activeCategories = timeCategories.filter(cat => cat.hours > 0);
+
+                // Create time use recommendations based on role and time allocation
+                let recommendations = [];
                 
-                // Add custom activities to the chart data
-                customActivities.forEach((activity, index) => {
-                    // Generate a color based on index
-                    const hue = (index * 137) % 360; // Golden angle approximation for good color distribution
-                    const color = `hsl(${hue}, 70%, 60%)`;
-                    
-                    activities.push({
-                        name: activity.name,
-                        hours: activity.hours * totalDays,
-                        color: color
-                    });
-                });
-                
-                // Remove any activities with 0 hours
-                const filteredActivities = activities.filter(activity => activity.hours > 0);
-                
-                // Create pie chart
-                createPieChart(filteredActivities);
-                
-                // Generate legend
-                createChartLegend(filteredActivities);
-                
-                // Generate recommendations
-                generateRecommendations(workingHoursPerDay, totalWorkingHours, dailyAverage, role);
-                
-                // Update analysis tab
-                updateAnalysisTab(activities, totalDays, workingDays, workingHoursPerDay);
-            });
-            
-            // Create pie chart function
-            function createPieChart(activities) {
-                const ctx = document.getElementById('timeChart');
-                
-                // Clear previous chart if it exists
-                if (window.timeAllocationChart) {
-                    window.timeAllocationChart.destroy();
+                if (remainingHoursPerDay < 1) {
+                    recommendations.push("Your schedule is very tight. Consider reducing less essential activities to create more time for your goal.");
                 }
                 
-                // Prepare data for Chart.js
-                const data = {
-                    labels: activities.map(a => a.name),
-                    datasets: [{
-                        data: activities.map(a => a.hours),
-                        backgroundColor: activities.map(a => a.color),
-                        borderWidth: 1
-                    }]
-                };
-                
-                // Create new chart
-                window.timeAllocationChart = new Chart(ctx, {
-                    type: 'pie',
-                    data: data,
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                display: false
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        const label = context.label || '';
-                                        const value = context.formattedValue || '';
-                                        const percentage = Math.round(context.raw / activities.reduce((sum, act) => sum + act.hours, 0) * 100);
-                                        return `${label}: ${value} hours (${percentage}%)`;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-            
-            // Create chart legend
-            function createChartLegend(activities) {
-                const legendContainer = document.getElementById('chartLegend');
-                legendContainer.innerHTML = ''; // Clear previous legend
-                
-                activities.forEach(activity => {
-                    const legendItem = document.createElement('div');
-                    legendItem.className = 'legend-item';
-                    
-                    const colorBox = document.createElement('div');
-                    colorBox.className = 'legend-color';
-                    colorBox.style.backgroundColor = activity.color;
-                    
-                    const label = document.createElement('span');
-                    label.textContent = `${activity.name}: ${activity.hours.toFixed(1)} hrs`;
-                    
-                    legendItem.appendChild(colorBox);
-                    legendItem.appendChild(label);
-                    legendContainer.appendChild(legendItem);
-                });
-            }
-            
-            // Generate recommendations based on results
-            function generateRecommendations(workingHoursPerDay, totalWorkingHours, dailyAverage, role) {
-                const recommendationsList = document.getElementById('recommendationsList');
-                recommendationsList.innerHTML = ''; // Clear previous recommendations
-                
-                const recommendations = [];
-                
-                // Add recommendations based on available time
-                if (workingHoursPerDay < 2) {
-                    recommendations.push('Your available time per day is very limited. Consider reducing some non-essential activities to create more time for your priorities.');
-                } else if (workingHoursPerDay >= 8) {
-                    recommendations.push('You have a good amount of available time. Make sure to prioritize your tasks and build in short breaks to maintain productivity.');
-                }
-                
-                // Role-specific recommendations
-                if (role === 'student') {
-                    recommendations.push('As a student, try to allocate at least 2-3 hours of focused study time each day, and schedule your most challenging subjects during your peak energy hours.');
-                } else if (role === 'employee') {
-                    recommendations.push('Consider using time blocking to separate deep work from shallow tasks. Aim to schedule at least 2-3 hours of uninterrupted focus time daily.');
-                } else if (role === 'entrepreneur') {
-                    recommendations.push('Entrepreneurs should prioritize high-leverage activities that drive business growth. Consider delegating routine tasks to free up more strategic thinking time.');
-                }
-                
-                // Sleep recommendations
-                const sleepHours = parseFloat(document.getElementById('sleepHours').value);
                 if (sleepHours < 7) {
-                    recommendations.push('Your sleep allocation is below the recommended 7-9 hours. Sufficient sleep is crucial for productivity and well-being.');
+                    recommendations.push("Your sleep hours are below recommended levels (7-9 hours). Sufficient sleep is crucial for productivity and health.");
                 }
                 
-                // Add recommendations to the page
-                recommendations.forEach(rec => {
-                    const recItem = document.createElement('div');
-                    recItem.className = 'recommendation-item';
-                    recItem.textContent = rec;
-                    recommendationsList.appendChild(recItem);
-                });
-            }
-            
-            // Update analysis tab with detailed information
-            function updateAnalysisTab(activities, totalDays, workingDays, workingHoursPerDay) {
-                const analysisTab = document.getElementById('analysis');
+                if (role === 'student' && workStudyHours > 10) {
+                    recommendations.push("Consider breaking up your study sessions with short breaks to maintain focus and efficiency.");
+                }
                 
-                // Basic content for analysis tab
-                analysisTab.innerHTML = `
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Time Analysis Dashboard</h2>
-                            <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+                if (selfCareHours < 0.5) {
+                    recommendations.push("Adding even small amounts of self-care time can improve your overall productivity and wellbeing.");
+                }
+
+                if (totalAvailableHours < 20) {
+                    recommendations.push("Your available time for this goal is limited. Consider extending your timeline or narrowing the scope of your goal.");
+                }
+
+                // Create the result HTML with more detailed metrics
+                let resultHTML = `
+                    <h2 class="result-header">Time Analysis for "${goalName}"</h2>
+                    
+                    <div class="result-grid">
+                        <div class="stat-card">
+                            <div class="stat-title">Goal Duration</div>
+                            <div class="stat-value">${goalSpan} ${timeUnit}</div>
+                            <div class="stat-unit">(${totalDays} days total)</div>
                         </div>
                         
-                        <div style="margin-bottom: 30px;">
-                            <h3 style="margin: 20px 0;">Time Breakdown</h3>
-                            <div class="chart-container" style="height: 350px;">
-                                <canvas id="weeklyDistributionChart"></canvas>
-                            </div>
+                        <div class="stat-card">
+                            <div class="stat-title">Daily Time for Goal</div>
+                            <div class="stat-value">${remainingHoursPerDay.toFixed(1)}</div>
+                            <div class="stat-unit">hours/day</div>
                         </div>
                         
-                        <div class="form-grid" style="margin-top: 30px;">
-                            <div>
-                                <h3 style="margin-bottom: 20px;">Key Metrics</h3>
-                                <div class="activity-list">
-                                    <div class="activity-item">
-                                        <div class="activity-icon"><i class="fas fa-calendar-alt"></i></div>
-                                        <div class="activity-name">Total Days in Period</div>
-                                        <div class="activity-hours">${totalDays} days</div>
-                                    </div>
-                                    <div class="activity-item">
-                                        <div class="activity-icon"><i class="fas fa-briefcase"></i></div>
-                                        <div class="activity-name">Working Days</div>
-                                        <div class="activity-hours">${workingDays} days</div>
-                                    </div>
-                                    <div class="activity-item">
-                                        <div class="activity-icon"><i class="fas fa-stopwatch"></i></div>
-                                        <div class="activity-name">Daily Available Time</div>
-                                        <div class="activity-hours">${workingHoursPerDay.toFixed(1)} hours</div>
-                                    </div>
-                                    <div class="activity-item">
-                                        <div class="activity-icon"><i class="fas fa-battery-half"></i></div>
-                                        <div class="activity-name">Productivity Ratio</div>
-                                        <div class="activity-hours">${(workingHoursPerDay / 24 * 100).toFixed(1)}%</div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <h3 style="margin-bottom: 20px;">Time Distribution</h3>
-                                <div class="chart-container" style="height: 200px;">
-                                    <canvas id="distributionBarChart"></canvas>
-                                </div>
-                            </div>
+                        <div class="stat-card">
+                            <div class="stat-title">Total Available Time</div>
+                            <div class="stat-value">${totalAvailableHours.toFixed(1)}</div>
+                            <div class="stat-unit">hours</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-title">Equivalent to</div>
+                            <div class="stat-value">${effectiveDays.toFixed(1)}</div>
+                            <div class="stat-unit">full days</div>
                         </div>
                     </div>
+
+                    <div class="alert ${percentTimeAvailable < 30 ? 'alert-warning' : 'alert-success'}">
+                        <strong>Time Reality Check:</strong> You think you have ${totalDays} days for your goal, 
+                        but after accounting for your daily activities, you effectively have 
+                        <strong>${effectiveDays.toFixed(1)} days</strong> (${percentTimeAvailable.toFixed(0)}% of the original time).
+                        <strong>That's ${daysLost.toFixed(1)} fewer days than you might expect!</strong>
+                    </div>
+
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: ${percentTimeAvailable}%">
+                            ${percentTimeAvailable.toFixed(0)}% Time Available
+                        </div>
+                    </div>
+
+                    <div class="pie-chart-container">
+                        <svg width="250" height="250" viewBox="0 0 100 100">
+                            <!-- Pie chart will be generated here -->
+                            ${generatePieChart(activeCategories)}
+                        </svg>
+                    </div>
+                    
+                    <div class="chart-legend">
+                        ${activeCategories.map(cat => `
+                            <div class="legend-item">
+                                <div class="legend-color" style="background-color: ${cat.color}"></div>
+                                ${cat.name} (${cat.hours}h)
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="recommendations">
+                        <h3>Time Management Recommendations</h3>
+                        <ul>
+                            ${recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                            <li>Break down your goal into smaller tasks that can fit into your ${remainingHoursPerDay.toFixed(1)} hours per day.</li>
+                            <li>Consider using time blocking techniques to maximize your productivity during available hours.</li>
+                        </ul>
+                    </div>
                 `;
-                
-                // Create weekly distribution chart
-                setTimeout(() => {
-                    const weeklyCtx = document.getElementById('weeklyDistributionChart');
+
+                // Display the result
+                resultDiv.innerHTML = resultHTML;
+                resultDiv.style.display = "block";
+
+                // Scroll to results
+                resultDiv.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            // Function to generate SVG pie chart
+            function generatePieChart(data) {
+                const total = data.reduce((sum, category) => sum + category.hours, 0);
+                let startAngle = 0;
+                let paths = [];
+
+                data.forEach(category => {
+                    if (category.hours <= 0) return;
+
+                    const percentage = category.hours / total;
+                    const endAngle = startAngle + percentage * 360;
                     
-                    // Prepare data
-                    const labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-                    const datasets = [];
+                    // Calculate path coordinates
+                    const x1 = 50 + 40 * Math.cos(startAngle * Math.PI / 180);
+                    const y1 = 50 + 40 * Math.sin(startAngle * Math.PI / 180);
+                    const x2 = 50 + 40 * Math.cos(endAngle * Math.PI / 180);
+                    const y2 = 50 + 40 * Math.sin(endAngle * Math.PI / 180);
                     
-                    // Group activities by category
-                    const basicNeeds = activities.filter(a => ['Sleep', 'Eating', 'Personal Care'].includes(a.name))
-                        .reduce((sum, act) => sum + (act.hours / totalDays), 0);
+                    // Create SVG path
+                    const largeArcFlag = percentage > 0.5 ? 1 : 0;
+                    const pathData = `M 50 50 L ${x1} ${y1} A 40 40 0 ${largeArcFlag} 1 ${x2} ${y2} Z`;
                     
-                    const travel = activities.find(a => a.name === 'Travel')?.hours / totalDays || 0;
-                    const leisure = activities.find(a => a.name === 'Leisure')?.hours / totalDays || 0;
-                    const available = activities.find(a => a.name === 'Available Time')?.hours / totalDays || 0;
+                    paths.push(`<path d="${pathData}" fill="${category.color}" stroke="white" stroke-width="1"></path>`);
                     
-                    // Handle weekend differences
-                    const weekdayData = [basicNeeds, travel, leisure, available];
-                    const weekendData = [basicNeeds, travel / 2, leisure * 1.5, available * 0.5];
-                    
-                    // Create chart
-                    new Chart(weeklyCtx, {
-                        type: 'bar',
-                        data: {
-                            labels: labels,
-                            datasets: [
-                                {
-                                    label: 'Basic Needs',
-                                    data: labels.map(() => basicNeeds),
-                                    backgroundColor: '#4285f4'
-                                },
-                                {
-                                    label: 'Travel',
-                                    data: labels.map((day, i) => i < 5 ? travel : travel / 2),
-                                    backgroundColor: '#ea4335'
-                                },
-                                {
-                                    label: 'Leisure',
-                                    data: labels.map((day, i) => i < 5 ? leisure : leisure * 1.5),
-                                    backgroundColor: '#34a853'
-                                },
-                                {
-                                    label: 'Available Time',
-                                    data: labels.map((day, i) => i < 5 ? available : available * 0.5),
-                                    backgroundColor: '#673ab7'
-                                }
-                            ]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            scales: {
-                                x: {
-                                    stacked: true
-                                },
-                                y: {
-                                    stacked: true,
-                                    max: 24
-                                }
-                            }
-                        }
-                    });
-                    
-                    // Create distribution bar chart
-                    const distCtx = document.getElementById('distributionBarChart');
-                    
-                    // Calculate percentages
-                    const categoryNames = ['Basic Needs', 'Travel', 'Leisure', 'Available'];
-                    const categoryValues = [
-                        (basicNeeds / 24) * 100,
-                        (travel / 24) * 100,
-                        (leisure / 24) * 100,
-                        (available / 24) * 100
-                    ];
-                    
-                    new Chart(distCtx, {
-                        type: 'horizontalBar',
-                        data: {
-                            labels: categoryNames,
-                            datasets: [ {
-                                label: 'Percentage of Day',
-                                data: categoryValues,
-                                backgroundColor: ['#4285f4', '#ea4335', '#34a853', '#673ab7']
-                            } ]
-                        },
-                        options: {
-                            indexAxis: 'y',
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            scales: {
-                                x: {
-                                    min: 0,
-                                    max: 100,
-                                    ticks: {
-                                        callback: function(value) {
-                                            return value + '%';
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }, 100);
+                    startAngle = endAngle;
+                });
+
+                return paths.join('');
             }
-            
-            // Dark mode toggle functionality
-            const darkModeToggle = document.getElementById('darkModeToggle');
-            darkModeToggle.addEventListener('change', function() {
-                document.body.classList.toggle('dark-mode');
+
+            // Validate that total hours don't exceed 24 hours
+            const timeInputs = document.querySelectorAll('input[type="number"]');
+            timeInputs.forEach(input => {
+                input.addEventListener('change', validateTotalHours);
             });
-            
-            // Download report button
-            document.getElementById('downloadReportBtn').addEventListener('click', function() {
-                alert('Report download functionality would be implemented here.');
-                // In a real implementation, this would generate and download a PDF report
-            });
-            
-            // Share results button
-            document.getElementById('shareResultsBtn').addEventListener('click', function() {
-                alert('Share results functionality would be implemented here.');
-                // In a real implementation, this would allow sharing via email, social media, etc.
-            });
-            
-            // Save preset button
-            document.getElementById('savePresetBtn').addEventListener('click', function() {
-                alert('Your settings have been saved as a preset.');
-                // In a real implementation, this would save the current form values to localStorage
-            });
-            
-            // Clear data button
-            document.getElementById('clearDataBtn').addEventListener('click', function() {
-                if (confirm('Are you sure you want to clear all saved data?')) {
-                    alert('All saved data has been cleared.');
-                    // In a real implementation, this would clear localStorage data
+
+            function validateTotalHours() {
+                const workStudyHours = parseFloat(document.getElementById('workStudyHours').value) || 0;
+                const sleepHours = parseFloat(document.getElementById('sleepHours').value) || 0;
+                const eatingHours = parseFloat(document.getElementById('eatingHours').value) || 0;
+                const travelHours = parseFloat(document.getElementById('travelHours').value) || 0;
+                const leisureHours = parseFloat(document.getElementById('leisureHours').value) || 0;
+                const familyHours = parseFloat(document.getElementById('familyHours').value) || 0;
+                const selfCareHours = parseFloat(document.getElementById('selfCareHours').value) || 0;
+                
+                const totalHours = workStudyHours + sleepHours + eatingHours + 
+                                  travelHours + leisureHours + familyHours + selfCareHours;
+                
+                if (totalHours > 24) {
+                    alert(`Warning: Your total allocated hours (${totalHours.toFixed(1)}) exceed 24 hours in a day.`);
                 }
-            });
+            }
         });
     </script>
 </body>
